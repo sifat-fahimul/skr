@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import getCurrentDateTime from "../hooks/getCurrentDateTime";
+import { useCreateCpuMutation } from "../redux/features/cpu/cpuApi";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddCpu = () => {
+  const navigate = useNavigate();
+  const [createCpu, { isLoading, isError, error, isSuccess }] =
+    useCreateCpuMutation();
   const [Manufacturer, setManufacturer] = useState("");
   const [Cores, setCores] = useState("");
   const [ClockSpeed, setClockSpeed] = useState("");
@@ -12,24 +18,13 @@ const AddCpu = () => {
   const [Model, setModel] = useState("");
   const [Repait, setRepait] = useState("");
 
-  //   {
-  //     "Id": 3,
-  //     "Manufacturer": "\"Dell\"",
-  //     "Cores": "i3",
-  //     "ClockSpeed": "2.5",
-  //     "BranchCode": "101",
-  //     "CreateDate": "2023-07-03T00:00:00",
-  //     "UpdateDate": "2023-07-03T00:00:00",
-  //     "InputBy": "sa-gor",
-  //     "UpdateBy": "Rakshit-2",
-  //     "Remarks": "hob",
-  //     "Repait": 2,
-  //     "Model": "i15"
-  // }
+  useEffect(() => {
+    if (isSuccess) navigate("/cpu-list");
+  }, [isSuccess]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const obj = {
+    createCpu({
       Manufacturer,
       Cores,
       ClockSpeed,
@@ -41,25 +36,12 @@ const AddCpu = () => {
       Repait,
       CreateDate: getCurrentDateTime(),
       UpdateDate: getCurrentDateTime(),
-    };
-    console.log("obj", obj);
+    });
   };
   return (
     <div className="bg-gray-100 w-full ">
       <div className="flex justify-between">
         <h1 className="text-4xl">Add New Monitor</h1>
-
-        {/* <div className="flex gap-4 w-80  ">
-          <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-            Save to draft
-          </button>
-          <Link
-            to=""
-            className="group relative flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Publish
-          </Link>
-        </div> */}
       </div>
 
       <div>
@@ -80,6 +62,7 @@ const AddCpu = () => {
                       id="Manufacturer-title"
                       type="text"
                       placeholder="Type here"
+                      required
                       value={Manufacturer}
                       onChange={(e) => setManufacturer(e.target.value)}
                     />
@@ -97,6 +80,7 @@ const AddCpu = () => {
                         id="Product-title"
                         type="text"
                         placeholder="Type here"
+                        required
                         value={Cores}
                         onChange={(e) => setCores(e.target.value)}
                       />
@@ -113,6 +97,7 @@ const AddCpu = () => {
                         id="Product-title"
                         type="text"
                         placeholder="Type here"
+                        required
                         value={ClockSpeed}
                         onChange={(e) => setClockSpeed(e.target.value)}
                       />
@@ -129,6 +114,7 @@ const AddCpu = () => {
                         id="Product-title"
                         type="text"
                         placeholder="Type here"
+                        required
                         value={BranchCode}
                         onChange={(e) => setBranchCode(e.target.value)}
                       />
@@ -147,6 +133,7 @@ const AddCpu = () => {
                         id="Product-title"
                         type="text"
                         placeholder="Type here"
+                        required
                         value={Model}
                         onChange={(e) => setModel(e.target.value)}
                       />
@@ -163,6 +150,7 @@ const AddCpu = () => {
                         id="Product-title"
                         type="number"
                         placeholder="Type here"
+                        required
                         value={Repait}
                         onChange={(e) => setRepait(e.target.value)}
                       />
@@ -181,8 +169,9 @@ const AddCpu = () => {
                       rows={4}
                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline placeholder:text-xs placeholder:text-gray-500 bg-gray-200"
                       id="Product-title"
-                      // type="text"
+                      type="text"
                       placeholder="Type here"
+                      required
                       value={Remarks}
                       onChange={(e) => setRemarks(e.target.value)}
                     />
@@ -323,7 +312,13 @@ const AddCpu = () => {
                 </div>
               </div> */}
             </div>
+            {isError && (
+              <div>
+                <p className="text-center text-red-500 mb-3">{error?.error}</p>
+              </div>
+            )}
             <button
+              disabled={isLoading}
               type="submit"
               className="group relative flex justify-center rounded-md w-full border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
