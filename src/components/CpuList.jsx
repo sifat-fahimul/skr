@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Space, Table, Tag } from "antd";
 import { useGetAllCpuQuery } from "../redux/features/cpu/cpuApi";
@@ -202,6 +202,7 @@ const cpu = [
 ];
 
 const CpuList = () => {
+  const [searchText, setSearchText] = useState("");
   const { data, isLoading, isError, error } = useGetAllCpuQuery();
 
   // decide what to render
@@ -216,13 +217,22 @@ const CpuList = () => {
         <input
           className="pl-3 placeholder:text-xs placeholder:text-gray-400 rounded outline-none border-none"
           type="text"
-          placeholder="Search Model Name"
+          placeholder="Search Manufacturer"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
 
       <div className="mt-8">
         {/* dataSource will be data */}
-        <Table columns={columns} dataSource={cpu} />
+        <Table
+          columns={columns}
+          dataSource={cpu?.filter((e) =>
+            e?.Manufacturer.toLocaleLowerCase().includes(
+              searchText.toLocaleLowerCase()
+            )
+          )}
+        />
       </div>
     </div>
   );

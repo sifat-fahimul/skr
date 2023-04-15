@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "antd";
 import { useGetAllPrinterQuery } from "../redux/features/printer/printerApi";
 const columns = [
@@ -85,6 +85,7 @@ const printer = [
 ];
 
 const PrinterList = () => {
+  const [searchText, setSearchText] = useState("");
   const { data, isLoading, isError, error } = useGetAllPrinterQuery();
 
   // decide what to render
@@ -100,12 +101,21 @@ const PrinterList = () => {
           className="pl-3 placeholder:text-xs placeholder:text-gray-400 rounded outline-none border-none"
           type="text"
           placeholder="Search Model Name"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
 
       <div className="mt-8">
         {/* dataSource will be data */}
-        <Table columns={columns} dataSource={printer} />
+        <Table
+          columns={columns}
+          dataSource={printer?.filter((e) =>
+            e?.Model.toLocaleLowerCase().includes(
+              searchText.toLocaleLowerCase()
+            )
+          )}
+        />
       </div>
     </div>
   );

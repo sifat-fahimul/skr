@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "antd";
 import { useGetAllScannerQuery } from "../redux/features/scanner/scannerApi";
 const columns = [
@@ -76,6 +76,7 @@ const scanner = [
 ];
 
 const ScannerList = () => {
+  const [searchText, setSearchText] = useState("");
   const { data, isLoading, isError, error } = useGetAllScannerQuery();
 
   // decide what to render
@@ -91,6 +92,8 @@ const ScannerList = () => {
           className="pl-3 placeholder:text-xs placeholder:text-gray-400 rounded outline-none border-none"
           type="text"
           placeholder="Search Manufacturer"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
       {/* <div className="my-8 bg-white h-fit p-5 rounded-md">
@@ -137,7 +140,14 @@ const ScannerList = () => {
   </div> */}
       <div className="mt-8">
         {/* dataSource will be data */}
-        <Table columns={columns} dataSource={scanner} />
+        <Table
+          columns={columns}
+          dataSource={scanner?.filter((e) =>
+            e?.Manufacturer.toLocaleLowerCase().includes(
+              searchText.toLocaleLowerCase()
+            )
+          )}
+        />
       </div>
     </div>
   );

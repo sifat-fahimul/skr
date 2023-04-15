@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "antd";
 import { useGetAllMonitorQuery } from "../redux/features/monitor/monitorApi";
 const columns = [
@@ -111,6 +111,7 @@ const monitor = [
 ];
 
 const MonitorList = () => {
+  const [searchText, setSearchText] = useState("");
   const { data, isLoading, isError, error } = useGetAllMonitorQuery();
 
   // decide what to render
@@ -126,12 +127,21 @@ const MonitorList = () => {
           className="pl-3 placeholder:text-xs placeholder:text-gray-400 rounded outline-none border-none"
           type="text"
           placeholder="Search Model Name"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
 
       <div className="mt-8">
         {/* dataSource will be data */}
-        <Table columns={columns} dataSource={monitor} />
+        <Table
+          columns={columns}
+          dataSource={monitor?.filter((e) =>
+            e?.Model.toLocaleLowerCase().includes(
+              searchText.toLocaleLowerCase()
+            )
+          )}
+        />
       </div>
     </div>
   );
