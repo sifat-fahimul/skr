@@ -45,9 +45,9 @@ const AddCpu = () => {
       </div>
 
       <div>
-        <div className="my-8  h-fit flex justify-between ">
-          <form action="" onSubmit={handleSubmit}>
-            <div className="flex gap-8">
+        <div className="my-8  h-fit ">
+          <form action="" onSubmit={handleSubmit} className="w-8/12 m-auto">
+            <div className=" gap-8">
               <div>
                 <div class="mb-4 bg-white p-5 rounded-md">
                   <div>
@@ -320,7 +320,7 @@ const AddCpu = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className="group relative flex justify-center rounded-md w-full border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="group relative  rounded-md w-full border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               ADD CPU
             </button>

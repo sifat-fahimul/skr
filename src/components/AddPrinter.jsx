@@ -44,9 +44,9 @@ const AddPrinter = () => {
       </div>
 
       <div>
-        <div className="my-8  h-fit flex justify-between ">
-          <form action="" onSubmit={handleSubmit}>
-            <div className="flex gap-8">
+        <div className="my-8  h-fit ">
+          <form action="" onSubmit={handleSubmit} className="w-8/12 m-auto">
+            <div className=" gap-8">
               <div>
                 <div class="mb-4 bg-white p-5 rounded-md">
                   <div>

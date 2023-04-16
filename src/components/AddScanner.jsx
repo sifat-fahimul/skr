@@ -22,17 +22,6 @@ const AddScanner = () => {
     if (isSuccess) navigate("/scanner-list");
   }, [isSuccess]);
 
-  // "Manufacturer": "Dell",
-  // "Model": "2uatxpps",
-  // "ScreenSize": null,
-  // "BranchCode": "100",
-  // "CreateDate": "2023-07-03T00:00:00",
-  // "UpdateDate": null,
-  // "InputBy": null,
-  // "UpdateBy": "Rakshit-2",
-  // "Remarks": "Non",
-  // "Repait": 2
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -56,9 +45,9 @@ const AddScanner = () => {
       </div>
 
       <div>
-        <div className="my-8  h-fit flex justify-between ">
-          <form action="" onSubmit={handleSubmit}>
-            <div className="flex gap-8">
+        <div className="my-8  h-fit ">
+          <form action="" onSubmit={handleSubmit} className="w-8/12 m-auto">
+            <div className=" gap-8">
               <div>
                 <div class="mb-4 bg-white p-5 rounded-md">
                   <div>
